@@ -182,10 +182,6 @@ watch(theme, () => {
           <a href="#projects" @click="closeNav">Projects</a>
           <a href="#contact" @click="closeNav">Contact</a>
           <a :href="EMAIL" @click="closeNav">Email</a>
-          <button class="theme-toggle" @click="toggleTheme" :aria-label="'Switch to ' + (theme==='dark' ? 'light' : 'dark') + ' theme'">
-            <svg v-if="theme==='dark'" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21.64 13a9 9 0 01-10.63-10.63A9 9 0 1021.64 13z"/></svg>
-            <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.76 4.84l-1.8-1.79L3.17 4.84l1.79 1.8 1.8-1.8zm10.48 0l1.79-1.79 1.79 1.79-1.79 1.8-1.79-1.8zM12 2h0v3h0V2zm0 17h0v3h0v-3zM4.84 17.24l-1.67 1.67 1.79 1.79 1.67-1.67-1.79-1.79zM19.16 17.24l1.79 1.79-1.67 1.67-1.79-1.79 1.67-1.67zM2 12h3v0H2zm17 0h3v0h-3zM6.76 19.16l1.8 1.8-1.8-1.8z"/></svg>
-          </button>
           <a :href="GITHUB_URL" target="_blank" rel="noopener" class="icon" aria-label="GitHub" @click="closeNav">
             <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
           </a>

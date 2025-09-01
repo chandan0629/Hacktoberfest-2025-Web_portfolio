@@ -1,6 +1,6 @@
 # Chandan – Developer Portfolio
 
-Deploy:- (https://chandan629.vercel.app/)
+Deploy:- (https://chandan629.netlify.app)
 
 Responsive, modern developer portfolio built with Vue 3 + Vite. It features official skill logos with emoji fallbacks, a GitHub projects section, theme toggle (light/dark), subtle 3D visuals, and m[...]  
 

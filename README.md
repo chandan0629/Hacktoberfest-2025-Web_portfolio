@@ -1,6 +1,8 @@
 # Chandan – Developer Portfolio (Vue 3 + Vite)
 
-Responsive, modern developer portfolio built with Vue 3 + Vite. It features official skill logos with emoji fallbacks, a GitHub projects section, theme toggle (light/dark), subtle 3D visuals, and mobile‑friendly navigation (with a direct Email tab). All core configuration lives in a single Vue component for easy updates.
+[Live Demo](https://chandan629.vercel.app/)
+
+Responsive, modern developer portfolio built with Vue 3 + Vite. It features official skill logos with emoji fallbacks, a GitHub projects section, theme toggle (light/dark), subtle 3D visuals, and m[...]  
 
 ## Features
 
@@ -8,7 +10,7 @@ Responsive, modern developer portfolio built with Vue 3 + Vite. It features offi
 - Responsive layout and mobile‑friendly nav with evenly spaced tabs
 - Theme toggle (light/dark) persisted to localStorage
 - Skills section
-  - Official brand SVG logos for common tools (TypeScript, JavaScript, Vue, Vite, Node.js, Express, GraphQL, PostgreSQL, MongoDB, Prisma, TailwindCSS, AWS, Azure, GCP, Docker, Kubernetes, Terraform, GitHub Actions, Linux, NGINX, Pandas, NumPy, scikit‑learn, TensorFlow, PyTorch, Jupyter, Matplotlib)
+  - Official brand SVG logos for common tools (TypeScript, JavaScript, Vue, Vite, Node.js, Express, GraphQL, PostgreSQL, MongoDB, Prisma, TailwindCSS, AWS, Azure, GCP, Docker, Kubernetes, Terrafor[...]
   - Emoji fallback + Twemoji for consistent cross‑platform rendering
   - Logo errors gracefully fall back to emoji
 - Projects section

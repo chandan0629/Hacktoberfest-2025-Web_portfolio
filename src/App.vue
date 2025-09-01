@@ -31,6 +31,14 @@ const repos = ref([])
 
 function openNew(url) { window.open(url, '_blank', 'noopener') }
 function scrollTo(sel) { const el = document.querySelector(sel); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
+function getLiveUrl(r) {
+  try {
+    if (r.homepage && /^https?:\/\//i.test(r.homepage)) return r.homepage
+    if (r.has_pages) return `https://${GITHUB_USER}.github.io/${r.name}/`
+    if (r.name === 'my-portfolio') return `https://${GITHUB_USER}.github.io/${r.name}/`
+  } catch (e) {}
+  return null
+}
 
 // Skills with icons
 const skills = ref([
@@ -244,7 +252,7 @@ watch(theme, () => {
               <p class="project-desc">{{ r.description || '—' }}</p>
               <div class="project-actions">
                 <button class="btn" @click="openNew(r.html_url)">Open Repo</button>
-                <button v-if="r.homepage" class="btn secondary" @click="openNew(r.homepage)">Live</button>
+                <button v-if="getLiveUrl(r)" class="btn secondary" @click="openNew(getLiveUrl(r))">Live</button>
               </div>
             </div>
           </div>

@@ -16,6 +16,8 @@ const LINKEDIN_URL = 'https://www.linkedin.com/in/chandan-kumar-raj-210839210/'
 const THEME_KEY = 'portfolio_theme_v1'
 const theme = ref('dark')
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
+const mqHoverFine = window.matchMedia('(hover: hover) and (pointer: fine)')
+const mqReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 function applyTheme(t) { document.documentElement.setAttribute('data-theme', t) }
 function loadTheme() {
   const saved = localStorage.getItem(THEME_KEY)
@@ -24,6 +26,9 @@ function loadTheme() {
 }
 function toggleTheme() { theme.value = theme.value === 'dark' ? 'light' : 'dark' }
 watch(theme, (t) => { localStorage.setItem(THEME_KEY, t); applyTheme(t) })
+const navOpen = ref(false)
+function toggleNav() { navOpen.value = !navOpen.value }
+function closeNav() { navOpen.value = false }
 
 // Data: GitHub user + repos
 const user = ref(null)
@@ -86,6 +91,7 @@ const skills = ref([
 
 // Lightweight 3D tilt effect
 function attachTilt(selector, maxTilt = 8) {
+  if (!mqHoverFine.matches || mqReduceMotion.matches) return
   const els = document.querySelectorAll(selector)
   els.forEach((el) => {
     if (el.dataset.tiltInit) return
@@ -157,20 +163,29 @@ watch(theme, () => {
     <nav class="nav">
       <div class="container nav-row">
         <div class="brand" @click="scrollTo('#top')">{{ NAME }}</div>
-        <div class="nav-links">
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
-          <a :href="EMAIL">Email</a>
+        <div class="nav-actions">
           <button class="theme-toggle" @click="toggleTheme" :aria-label="'Switch to ' + (theme==='dark' ? 'light' : 'dark') + ' theme'">
             <svg v-if="theme==='dark'" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21.64 13a9 9 0 01-10.63-10.63A9 9 0 1021.64 13z"/></svg>
             <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.76 4.84l-1.8-1.79L3.17 4.84l1.79 1.8 1.8-1.8zm10.48 0l1.79-1.79 1.79 1.79-1.79 1.8-1.79-1.8zM12 2h0v3h0V2zm0 17h0v3h0v-3zM4.84 17.24l-1.67 1.67 1.79 1.79 1.67-1.67-1.79-1.79zM19.16 17.24l1.79 1.79-1.67 1.67-1.79-1.79 1.67-1.67zM2 12h3v0H2zm17 0h3v0h-3zM6.76 19.16l1.8 1.8-1.8-1.8z"/></svg>
           </button>
-          <a :href="GITHUB_URL" target="_blank" rel="noopener" class="icon" aria-label="GitHub">
+          <button class="menu-toggle" @click="toggleNav" :aria-expanded="navOpen.toString()" aria-controls="primary-navigation" aria-label="Toggle menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+          </button>
+        </div>
+        <div :class="['nav-links', { open: navOpen }]" id="primary-navigation">
+          <a href="#about" @click="closeNav">About</a>
+          <a href="#skills" @click="closeNav">Skills</a>
+          <a href="#projects" @click="closeNav">Projects</a>
+          <a href="#contact" @click="closeNav">Contact</a>
+          <a :href="EMAIL" @click="closeNav">Email</a>
+          <button class="theme-toggle" @click="toggleTheme" :aria-label="'Switch to ' + (theme==='dark' ? 'light' : 'dark') + ' theme'">
+            <svg v-if="theme==='dark'" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21.64 13a9 9 0 01-10.63-10.63A9 9 0 1021.64 13z"/></svg>
+            <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.76 4.84l-1.8-1.79L3.17 4.84l1.79 1.8 1.8-1.8zm10.48 0l1.79-1.79 1.79 1.79-1.79 1.8-1.79-1.8zM12 2h0v3h0V2zm0 17h0v3h0v-3zM4.84 17.24l-1.67 1.67 1.79 1.79 1.67-1.67-1.79-1.79zM19.16 17.24l1.79 1.79-1.67 1.67-1.79-1.79 1.67-1.67zM2 12h3v0H2zm17 0h3v0h-3zM6.76 19.16l1.8 1.8-1.8-1.8z"/></svg>
+          </button>
+          <a :href="GITHUB_URL" target="_blank" rel="noopener" class="icon" aria-label="GitHub" @click="closeNav">
             <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
           </a>
-          <a :href="LINKEDIN_URL" target="_blank" rel="noopener" class="icon" aria-label="LinkedIn">
+          <a :href="LINKEDIN_URL" target="_blank" rel="noopener" class="icon" aria-label="LinkedIn" @click="closeNav">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.025-3.037-1.852-3.037-1.853 0-2.136 1.447-2.136 2.942v5.664H9.352V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.605 0 4.27 2.371 4.27 5.455v6.286zM5.337 7.433a2.062 2.062 0 11.002-4.124 2.062 2.062 0 01-.002 4.124zM6.99 20.452H3.684V9h3.307v11.452z"/></svg>
           </a>
         </div>
@@ -347,7 +362,7 @@ a:hover, a:focus { text-decoration: underline; }
 @keyframes float { to { transform: translate3d(0,-20px,0) scale(1.05); opacity: .65; } }
 
 /* NAV */
-.nav { position: sticky; top: 0; z-index: 50; background: rgba(2,6,23,0.55); backdrop-filter: blur(10px) saturate(1.2); border-bottom: 1px solid var(--border); }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(2,6,23,0.55); backdrop-filter: blur(10px) saturate(1.2); border-bottom: 1px solid var(--border); padding-top: env(safe-area-inset-top); }
 :root[data-theme='light'] .nav { background: rgba(255,255,255,0.8); }
 .nav-row { display: flex; align-items: center; justify-content: space-between; height: 64px; }
 .brand { font-weight: 800; letter-spacing: .3px; cursor: pointer; }
@@ -355,13 +370,15 @@ a:hover, a:focus { text-decoration: underline; }
 .nav a { color: var(--text); opacity: 1; padding: 8px 10px; border-radius: 10px; background: var(--chip); border: 1px solid var(--border); text-decoration: none; }
 .icon svg { width: 20px; height: 20px; }
 .theme-toggle { border: 1px solid var(--border); background: var(--panel); color: var(--text); border-radius: 8px; padding: 6px 8px; cursor: pointer; box-shadow: var(--shadow-sm); }
+.menu-toggle { display: none; border: 1px solid var(--border); background: var(--panel); color: var(--text); border-radius: 8px; padding: 6px 8px; cursor: pointer; box-shadow: var(--shadow-sm); }
+.nav-actions { display: flex; align-items: center; gap: 8px; }
 
 /* HERO */
 .hero { padding: 70px 0; }
 .hero-inner { display: grid; grid-template-columns: 1.4fr .9fr; gap: 28px; align-items: center; }
-.hero-text h1 { margin: 0 0 6px; font-size: 44px; text-shadow: 0 6px 20px rgba(2,8,23,0.35); }
-.hero-text h2 { margin: 0 0 8px; font-weight: 700; font-size: 20px; color: var(--muted); }
-.tagline { color: var(--muted); max-width: 720px; }
+.hero-text h1 { margin: 0 0 6px; font-size: clamp(28px, 6vw, 44px); line-height: 1.1; text-shadow: 0 6px 20px rgba(2,8,23,0.35); }
+.hero-text h2 { margin: 0 0 8px; font-weight: 700; font-size: clamp(16px, 3.2vw, 22px); color: var(--muted); }
+.tagline { color: var(--muted); max-width: 720px; font-size: 16px; line-height: 1.6; }
 .pill { display: inline-block; background: var(--chip); border: 1px solid var(--border); padding: 6px 10px; border-radius: 999px; margin-bottom: 10px; font-size: 12px; color: var(--muted); box-shadow: var(--shadow-sm); }
 .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 20px; justify-content: space-evenly; }
 .hero-cta .btn { min-width: 160px; }
@@ -408,17 +425,41 @@ a:hover, a:focus { text-decoration: underline; }
 /* FOOTER */
 .footer { border-top: 1px solid var(--border); padding: 18px 0 24px; text-align: center; color: var(--muted); }
 
+/* Accessibility and device optimizations */
+.section { scroll-margin-top: 80px; }
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .orb { animation: none !important; }
+  .chip, .project, .btn { transition: none !important; }
+  .grid3d { transform: none !important; }
+}
+
+/* Tablet refinements */
+@media (max-width: 768px) {
+  .hero { padding: 60px 0; }
+  .section { padding: 44px 0; }
+  .projects { gap: 14px; }
+  .nav-row { height: 60px; position: relative; }
+  .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+  .nav-links { position: absolute; left: 0; right: 0; top: 100%; background: var(--panel); border-bottom: 1px solid var(--border); box-shadow: var(--shadow); padding: 12px 16px; display: none; flex-direction: column; gap: 8px; }
+  .nav-links.open { display: flex; }
+  .nav-links a { text-align: left; }
+  .nav-links .theme-toggle { display: none; }
+}
+
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .hero-inner { grid-template-columns: 1fr; }
   .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
-  .nav .icon { display: none; }
-  .nav-links { gap: 8px; justify-content: space-evenly; }
-  .nav-links a { flex: 1 1 auto; text-align: center; }
   .hero-cta .btn, .contact-actions .btn { flex: 1 1 100%; }
-  .hero-text h1 { font-size: 36px; }
+  .hero-text h1 { font-size: clamp(24px, 7.5vw, 32px); }
+  .hero-avatar img { transform: none; margin-left: auto; margin-right: auto; max-width: 260px; }
+  .chip { padding: 8px 10px; }
+  .chip-logo { width: 18px; height: 18px; margin-right: 6px; }
+  .chip-label { font-size: 12px; }
   .projects { grid-template-columns: 1fr; }
 }
 </style>

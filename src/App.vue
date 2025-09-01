@@ -18,6 +18,7 @@ const theme = ref('dark')
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
 const mqHoverFine = window.matchMedia('(hover: hover) and (pointer: fine)')
 const mqReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+const BASE = import.meta.env.BASE_URL
 function applyTheme(t) { document.documentElement.setAttribute('data-theme', t) }
 function loadTheme() {
   const saved = localStorage.getItem(THEME_KEY)
@@ -88,6 +89,9 @@ const skills = ref([
   { label: 'Matplotlib', icon: '📈', logo: '/logos/matplotlib.svg' },
   { label: 'Data Visualization', icon: '📊' },
 ])
+
+// Prefix public asset logos with BASE for GitHub Pages compatibility
+skills.value = skills.value.map(s => s.logo ? ({ ...s, logo: (BASE + s.logo.replace(/^\//, '')) }) : s)
 
 // Lightweight 3D tilt effect
 function attachTilt(selector, maxTilt = 8) {
@@ -207,7 +211,7 @@ watch(theme, () => {
           </div>
         </div>
         <div class="hero-avatar">
-          <img :src="user?.avatar_url || '/vite.svg'" :alt="user?.name || 'Avatar'" />
+          <img :src="user?.avatar_url || (BASE + 'vite.svg')" :alt="user?.name || 'Avatar'" />
         </div>
       </div>
     </header>

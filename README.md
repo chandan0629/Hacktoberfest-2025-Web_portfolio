@@ -1,6 +1,6 @@
-# Chandan – Developer Portfolio (Vue 3 + Vite)
+# Chandan – Developer Portfolio
 
-[Live Demo](https://chandan629.vercel.app/)
+Deploy:- (https://chandan629.vercel.app/)
 
 Responsive, modern developer portfolio built with Vue 3 + Vite. It features official skill logos with emoji fallbacks, a GitHub projects section, theme toggle (light/dark), subtle 3D visuals, and m[...]  
 
@@ -16,7 +16,8 @@ Responsive, modern developer portfolio built with Vue 3 + Vite. It features offi
 - Projects section
   - Loads your public GitHub repositories (non‑fork, sorted by stars)
   - Quick links to repo and optional live site
-- Contact section with responsive buttons (Email, LinkedIn, GitHub)
+- Contact section
+  - Responsive buttons (Email, LinkedIn, GitHub)
 - Subtle 3D visuals (tilt effects on cards/chips, decorative background)
 
 ## Quick Start

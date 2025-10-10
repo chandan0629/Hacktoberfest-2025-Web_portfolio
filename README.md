@@ -2,7 +2,7 @@
 
 Deploy:- (https://chandan629.netlify.app)
 
-Responsive, modern developer portfolio built with Vue 3 + Vite. It features official skill logos with emoji fallbacks, a GitHub projects section, theme toggle (light/dark), subtle 3D visuals, and m[...]  
+Responsive, modern developer portfolio built with Vue 3 + Vite. It features official skill logos with emoji fallbacks, a GitHub projects section, theme toggle (light/dark), subtle 3D visuals, and more.
 
 ## Features
 
@@ -10,7 +10,7 @@ Responsive, modern developer portfolio built with Vue 3 + Vite. It features offi
 - Responsive layout and mobile‑friendly nav with evenly spaced tabs
 - Theme toggle (light/dark) persisted to localStorage
 - Skills section
-  - Official brand SVG logos for common tools (TypeScript, JavaScript, Vue, Vite, Node.js, Express, GraphQL, PostgreSQL, MongoDB, Prisma, TailwindCSS, AWS, Azure, GCP, Docker, Kubernetes, Terrafor[...]
+  - Official brand SVG logos for common tools (TypeScript, JavaScript, Vue, Vite, Node.js, Express, GraphQL, PostgreSQL, MongoDB, Prisma, TailwindCSS, AWS, Azure, GCP, Docker, Kubernetes, Terraform, etc.)
   - Emoji fallback + Twemoji for consistent cross‑platform rendering
   - Logo errors gracefully fall back to emoji
 - Projects section
@@ -79,3 +79,25 @@ MIT (feel free to adapt for your own portfolio)
 Chandan Kumar Raj  
 GitHub: https://github.com/chandan0629  
 LinkedIn: https://www.linkedin.com/in/chandan-kumar-raj-210839210/
+
+---
+
+## Hacktoberfest 2025 & Contributions Welcome! 🎉
+
+This project is open for Hacktoberfest 2025 and all contributors. Whether you’re fixing bugs, adding features, updating documentation, or suggesting ideas—everyone is welcome!
+
+[![Hacktoberfest badge](https://img.shields.io/badge/Hacktoberfest-2025-blueviolet)](https://hacktoberfest.com/)
+
+**How to participate:**
+- Fork this repository
+- Make your changes (code, docs, suggestions)
+- Open a Pull Request (PR) with a clear description
+
+**Tips for contributors:**
+- Check for issues labeled `good first issue` or `hacktoberfest`
+- Be respectful and follow our Code of Conduct
+- Read our [CONTRIBUTING.md](CONTRIBUTING.md) for more details
+
+Official Hacktoberfest site: [https://hacktoberfest.com/](https://hacktoberfest.com/)
+
+Thank you for helping make open source better. Happy hacking!

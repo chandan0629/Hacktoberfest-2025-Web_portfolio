@@ -89,6 +89,8 @@ This project is open for Hacktoberfest 2025 and all contributors. Whether you’
 [![Hacktoberfest badge](https://img.shields.io/badge/Hacktoberfest-2025-blueviolet)](https://hacktoberfest.com/)
 
 **How to participate:**
+- Star this repo
+- Follow me If u want
 - Fork this repository
 - Make your changes (code, docs, suggestions)
 - Open a Pull Request (PR) with a clear description

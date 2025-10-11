@@ -142,6 +142,21 @@ onMounted(async () => {
   } catch {}
   // Attach tilt to chips after mount
   setTimeout(() => attachTilt('.chip', 5), 0)
+
+  // Add fade-in animations for sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible')
+        observer.unobserve(entry.target)
+      }
+    })
+  }, { threshold: 0.1 })
+  document.querySelectorAll('.section, .hero').forEach(el => {
+    el.classList.add('fade-in')
+    if (el.classList.contains('hero')) el.classList.add('visible') // Hero visible by default
+    else observer.observe(el)
+  })
 })
 
 // Re-attach tilt when theme changes (to ensure visual reset)
@@ -425,14 +440,28 @@ a:hover, a:focus { text-decoration: underline; }
 /* FOOTER */
 .footer { border-top: 1px solid var(--border); padding: 18px 0 24px; text-align: center; color: var(--muted); }
 
+/* ANIMATIONS */
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* Enhanced hover effects */
+.nav a:hover { transform: scale(1.05); filter: brightness(1.1); }
+.brand:hover { text-shadow: 0 0 10px var(--brand); }
+.theme-toggle:hover { transform: rotate(180deg); }
+.nav-links .icon:hover svg { animation: pulse 1s infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+.btn:active { transform: translateY(0) scale(0.98); }
+
 /* Accessibility and device optimizations */
 .section { scroll-margin-top: 80px; }
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   .orb { animation: none !important; }
-  .chip, .project, .btn { transition: none !important; }
+  .chip, .project, .btn, .fade-in { transition: none !important; }
   .grid3d { transform: none !important; }
+  .nav a:hover, .brand:hover, .theme-toggle:hover { transform: none !important; }
+  .nav-links .icon:hover svg { animation: none !important; }
 }
 
 /* Tablet refinements */

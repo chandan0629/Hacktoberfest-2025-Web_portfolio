@@ -93,6 +93,11 @@ const skills = ref([
 // Prefix public asset logos with BASE for GitHub Pages compatibility
 skills.value = skills.value.map(s => s.logo ? ({ ...s, logo: (BASE + s.logo.replace(/^\//, '')) }) : s)
 
+// Click handler for skills
+function onSkillClick(skill) {
+  alert(`You clicked: ${skill.label}`)
+}
+
 // Lightweight 3D tilt effect
 function attachTilt(selector, maxTilt = 8) {
   if (!mqHoverFine.matches || mqReduceMotion.matches) return
@@ -256,7 +261,7 @@ watch(theme, () => {
         <div class="container">
           <h3 class="section-title">Skills</h3>
           <div class="chips">
-            <span v-for="s in skills" :key="s.label" class="chip">
+            <span v-for="s in skills" :key="s.label" class="chip" @click="onSkillClick(s)" style="cursor:pointer;">
               <span v-if="s.logo && !s.failed" class="chip-logo"><img :src="s.logo" :alt="s.label + ' logo'" @error="s.failed = true" /></span>
               <span v-else class="chip-icon" aria-hidden="true">{{ s.icon }}</span>
               <span class="chip-label">{{ s.label }}</span>

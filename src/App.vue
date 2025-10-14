@@ -63,6 +63,7 @@ function getLiveUrl(r) {
     if (r.has_pages) return `https://${GITHUB_USER}.github.io/${r.name}/`;
     if (r.name === "my-portfolio")
       return `https://${GITHUB_USER}.github.io/${r.name}/`;
+    if (r.name === "my-portfolio") return `https://${GITHUB_USER}.github.io/${r.name}/`;
   } catch (e) {}
   return null;
 }
@@ -116,6 +117,11 @@ skills.value = skills.value.map((s) =>
   s.logo ? { ...s, logo: BASE + s.logo.replace(/^\//, "") } : s
 );
 
+// Click handler for skills
+function onSkillClick(skill) {
+  alert(`You clicked: ${skill.label}`);
+}
+
 // Lightweight 3D tilt effect
 function attachTilt(selector, maxTilt = 8) {
   if (!mqHoverFine.matches || mqReduceMotion.matches) return;
@@ -150,6 +156,7 @@ onMounted(async () => {
   try {
     if (window.twemoji)
       window.twemoji.parse(document.body, { folder: "svg", ext: ".svg" });
+    if (window.twemoji) window.twemoji.parse(document.body, { folder: "svg", ext: ".svg" });
   } catch (e) {}
   try {
     const userRes = await fetch(`https://api.github.com/users/${GITHUB_USER}`);
@@ -171,6 +178,24 @@ onMounted(async () => {
   } catch {}
   // Attach tilt to chips after mount
   setTimeout(() => attachTilt(".chip", 5), 0);
+
+  // Add fade-in animations for sections
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll(".section, .hero").forEach((el) => {
+    el.classList.add("fade-in");
+    if (el.classList.contains("hero")) el.classList.add("visible"); // Hero visible by default
+    else observer.observe(el);
+  });
 });
 
 // Re-attach tilt when theme changes (to ensure visual reset)
@@ -244,11 +269,32 @@ watch(theme, () => {
           </button>
         </div>
         <div :class="['nav-links', { open: navOpen }]" id="primary-navigation">
+
+        <div
+          :class="['nav-links', { open: navOpen }]"
+          id="primary-navigation"
+          style="
+            width: fit-content;
+            display: grid;
+            padding-left: 22px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 22px;
+          "
+        >
           <a href="#about" @click="closeNav">About</a>
           <a href="#skills" @click="closeNav">Skills</a>
           <a href="#projects" @click="closeNav">Projects</a>
           <a href="#contact" @click="closeNav">Contact</a>
           <a :href="EMAIL" @click="closeNav">Email</a>
+        </div>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding-left: 22px;
+            gap: 22px;
+          "
+        >
           <a
             :href="GITHUB_URL"
             target="_blank"
@@ -280,6 +326,109 @@ watch(theme, () => {
               />
             </svg>
           </a>
+          <aside class="nav-actions icon" style="height: 46px; width: 46px; padding: 0px">
+            <button
+              class="theme-toggle"
+              style="
+                height: 46px;
+                width: 46px;
+                padding: 0px;
+                aspect-ratio: 1/1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+              @click="toggleTheme"
+              :aria-label="'Switch to ' + (theme === 'dark' ? 'light' : 'dark') + ' theme'"
+            >
+              <svg
+                v-if="theme !== 'dark'"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M21.64 13a9 9 0 01-10.63-10.63A9 9 0 1021.64 13z" />
+              </svg>
+              <svg v-else width="24" height="24" viewBox="0 0 24 24">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="24" height="24" />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M12 2C12.5523 2 13 2.44772 13 3V5C13 5.55228 12.5523 6 12 6C11.4477 6 11 5.55228 11 5V3C11 2.44772 11.4477 2 12 2Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M19.7071 4.29289C20.0976 4.68342 20.0976 5.31658 19.7071 5.70711L17.7071 7.70711C17.3166 8.09763 16.6834 8.09763 16.2929 7.70711C15.9024 7.31658 15.9024 6.68342 16.2929 6.29289L18.2929 4.29289C18.6834 3.90237 19.3166 3.90237 19.7071 4.29289Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M18 12C18 11.4477 18.4477 11 19 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H19C18.4477 13 18 12.5523 18 12Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M16.2929 16.2929C16.6834 15.9024 17.3166 15.9024 17.7071 16.2929L19.7071 18.2929C20.0976 18.6834 20.0976 19.3166 19.7071 19.7071C19.3166 20.0976 18.6834 20.0976 18.2929 19.7071L16.2929 17.7071C15.9024 17.3166 15.9024 16.6834 16.2929 16.2929Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M12 18C12.5523 18 13 18.4477 13 19V21C13 21.5523 12.5523 22 12 22C11.4477 22 11 21.5523 11 21V19C11 18.4477 11.4477 18 12 18Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M7.70711 16.2929C8.09763 16.6834 8.09763 17.3166 7.70711 17.7071L5.70711 19.7071C5.31658 20.0976 4.68342 20.0976 4.29289 19.7071C3.90237 19.3166 3.90237 18.6834 4.29289 18.2929L6.29289 16.2929C6.68342 15.9024 7.31658 15.9024 7.70711 16.2929Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M2 12C2 11.4477 2.44772 11 3 11H5C5.55228 11 6 11.4477 6 12C6 12.5523 5.55228 13 5 13H3C2.44772 13 2 12.5523 2 12Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M4.29289 4.29289C4.68342 3.90237 5.31658 3.90237 5.70711 4.29289L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711C7.31658 8.09763 6.68342 8.09763 6.29289 7.70711L4.29289 5.70711C3.90237 5.31658 3.90237 4.68342 4.29289 4.29289Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </svg>
+            </button>
+            <button
+              class="menu-toggle"
+              @click="toggleNav"
+              :aria-expanded="navOpen.toString()"
+              aria-controls="primary-navigation"
+              aria-label="Toggle menu"
+              style="height: 46px; width: 46px"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z" />
+              </svg>
+            </button>
+          </aside>
         </div>
       </div>
     </nav>
@@ -309,6 +458,15 @@ watch(theme, () => {
             :src="user?.avatar_url || BASE + 'vite.svg'"
             :alt="user?.name || 'Avatar'"
           />
+            <button class="btn neutral" @click="openNew(GITHUB_URL)">View GitHub</button>
+            <button class="btn secondary" @click="openNew(LINKEDIN_URL)">
+              Connect on LinkedIn
+            </button>
+            <button class="btn neutral" @click="openNew(EMAIL)">Email Me</button>
+          </div>
+        </div>
+        <div class="hero-avatar">
+          <img :src="user?.avatar_url || BASE + 'vite.svg'" :alt="user?.name || 'Avatar'" />
         </div>
       </div>
     </header>
@@ -335,6 +493,20 @@ watch(theme, () => {
           <p>
             Curious, pragmatic, and collaborative—I fit well across teams,
             communicate clearly, and enjoy mentoring and open source.
+            Full‑stack engineer specializing in Vue, Node, and TypeScript, with a focus on
+            performance, reliability, and clean architecture.
+          </p>
+          <p>
+            Comfortable across Cloud & DevOps (AWS, Docker, Kubernetes, Terraform) and Data Science
+            tooling (Python, Pandas, scikit‑learn) to deliver end‑to‑end solutions.
+          </p>
+          <p>
+            I enjoy designing DX‑friendly APIs, building accessible, elegant UIs, and instrumenting
+            apps with metrics and observability for continuous improvement.
+          </p>
+          <p>
+            Curious, pragmatic, and collaborative—I fit well across teams, communicate clearly, and
+            enjoy mentoring and open source.
           </p>
         </div>
       </section>
@@ -354,6 +526,17 @@ watch(theme, () => {
               <span v-else class="chip-icon" aria-hidden="true">{{
                 s.icon
               }}</span>
+            <span
+              v-for="s in skills"
+              :key="s.label"
+              class="chip"
+              @click="onSkillClick(s)"
+              style="cursor: pointer"
+            >
+              <span v-if="s.logo && !s.failed" class="chip-logo"
+                ><img :src="s.logo" :alt="s.label + ' logo'" @error="s.failed = true"
+              /></span>
+              <span v-else class="chip-icon" aria-hidden="true">{{ s.icon }}</span>
               <span class="chip-label">{{ s.label }}</span>
             </span>
           </div>
@@ -384,6 +567,8 @@ watch(theme, () => {
                   class="btn secondary"
                   @click="openNew(getLiveUrl(r))"
                 >
+                <button class="btn" @click="openNew(r.html_url)">Open Repo</button>
+                <button v-if="getLiveUrl(r)" class="btn secondary" @click="openNew(getLiveUrl(r))">
                   Live
                 </button>
               </div>
@@ -553,6 +738,8 @@ body {
   margin: 0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
     Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
   color: var(--text);
   background: var(--bg);
 }
@@ -587,6 +774,7 @@ a:focus {
       var(--bg-3d-a),
       transparent 60%
     ),
+  background: radial-gradient(1200px 800px at 80% -10%, var(--bg-3d-a), transparent 60%),
     radial-gradient(900px 700px at -10% 10%, var(--bg-3d-b), transparent 60%);
   filter: saturate(1.1);
 }
@@ -601,6 +789,7 @@ a:focus {
       rgba(148, 163, 184, 0.08) 1px,
       transparent 1px
     ),
+  background-image: linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
     linear-gradient(to top, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
   background-size: 40px 40px;
   transform: perspective(900px) rotateX(58deg);
@@ -630,6 +819,38 @@ a:focus {
     var(--brand-2),
     transparent 60%
   );
+}
+.orb-b {
+  top: 20%;
+  right: -10%;
+  background: radial-gradient(circle at 70% 40%, var(--brand), transparent 60%);
+  animation-duration: 14s;
+}
+.orb-c {
+  bottom: -6%;
+  left: 30%;
+  background: radial-gradient(circle at 50% 50%, #f59e0b66, transparent 60%);
+  animation-duration: 16s;
+}
+@keyframes float {
+  to {
+    transform: translate3d(0, -20px, 0) scale(1.05);
+    opacity: 0.65;
+  }
+}
+.orb {
+  position: absolute;
+  width: 40vmin;
+  height: 40vmin;
+  border-radius: 50%;
+  filter: blur(30px);
+  opacity: 0.5;
+  animation: float 12s ease-in-out infinite alternate;
+}
+.orb-a {
+  top: 10%;
+  left: -5%;
+  background: radial-gradient(circle at 30% 30%, var(--brand-2), transparent 60%);
 }
 .orb-b {
   top: 20%;
@@ -683,6 +904,7 @@ a:focus {
   flex-wrap: wrap;
 }
 .nav a {
+  height: 100%;
   color: var(--text);
   opacity: 1;
   padding: 8px 10px;
@@ -694,6 +916,21 @@ a:focus {
 .icon svg {
   width: 20px;
   height: 20px;
+.nav a:hover {
+  border-color: #646cff;
+}
+.icon {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  aspect-ratio: 1/1;
+  width: 100%;
+  height: 45px;
+  padding: 8px;
+}
+.icon svg {
+  width: 24px;
+  height: 24px;
 }
 .theme-toggle {
   border: 1px solid var(--border);
@@ -768,6 +1005,7 @@ a:focus {
 }
 .hero-cta .btn {
   min-width: 160px;
+  padding: 8px 12px;
 }
 .hero-avatar img {
   width: 100%;
@@ -794,6 +1032,7 @@ a:focus {
   background: linear-gradient(180deg, var(--brand), #0284c7);
   box-shadow: 0 10px 20px rgba(14, 165, 233, 0.25),
     inset 0 0 0 1px rgba(148, 163, 184, 0.2);
+  box-shadow: 0 10px 20px rgba(14, 165, 233, 0.25), inset 0 0 0 1px rgba(148, 163, 184, 0.2);
   transition: transform 0.12s ease, filter 0.2s ease, box-shadow 0.2s ease;
 }
 .btn:hover {
@@ -853,6 +1092,7 @@ a:focus {
     rgba(148, 163, 184, 0.15),
     rgba(148, 163, 184, 0.08)
   );
+  background: linear-gradient(180deg, rgba(148, 163, 184, 0.15), rgba(148, 163, 184, 0.08));
   box-shadow: var(--shadow-sm);
   transform: perspective(900px);
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
@@ -901,6 +1141,7 @@ a:focus {
     rgba(148, 163, 184, 0.1),
     rgba(148, 163, 184, 0.06)
   );
+  background: linear-gradient(180deg, rgba(148, 163, 184, 0.1), rgba(148, 163, 184, 0.06));
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 16px;
@@ -945,6 +1186,9 @@ a:focus {
   display: flex;
   gap: 8px;
 }
+.project-actions button {
+  padding: 8px 12px;
+}
 
 /* CONTACT */
 .contact {
@@ -965,6 +1209,9 @@ a:focus {
 
 .contact-actions .btn svg {
   margin-right: 6px;
+  flex: 1 1 220px;
+  min-width: 160px;
+  padding: 8px 12px;
 }
 
 /* FOOTER */
@@ -973,6 +1220,37 @@ a:focus {
   padding: 18px 0 24px;
   text-align: center;
   color: var(--muted);
+}
+
+/* ANIMATIONS */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Enhanced hover effects */
+.brand:hover {
+  text-shadow: 0 0 10px var(--brand);
+}
+.nav-links .icon:hover svg {
+  animation: pulse 1s infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+.btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 /* Accessibility and device optimizations */
@@ -988,10 +1266,20 @@ a:focus {
   .chip,
   .project,
   .btn {
+  .btn,
+  .fade-in {
     transition: none !important;
   }
   .grid3d {
     transform: none !important;
+  }
+  .nav a:hover,
+  .brand:hover,
+  .theme-toggle:hover {
+    transform: none !important;
+  }
+  .nav-links .icon:hover svg {
+    animation: none !important;
   }
 }
 

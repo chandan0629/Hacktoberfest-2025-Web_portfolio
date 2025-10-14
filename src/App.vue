@@ -12,6 +12,9 @@ const EMAIL_TEXT = "chandantoaws@gmail.com";
 const GITHUB_USER = "chandan0629";
 const GITHUB_URL = `https://github.com/${GITHUB_USER}`;
 const LINKEDIN_URL = "https://www.linkedin.com/in/chandan-kumar-raj-210839210/";
+// Please update with ur profile links
+const TWITTER_URL = "https://twitter.com/your_twitter_handle";
+const INSTAGRAM_URL = "https://instagram.com/your_instagram_username";
 
 // Theme
 const THEME_KEY = "portfolio_theme_v1";
@@ -58,7 +61,8 @@ function getLiveUrl(r) {
   try {
     if (r.homepage && /^https?:\/\//i.test(r.homepage)) return r.homepage;
     if (r.has_pages) return `https://${GITHUB_USER}.github.io/${r.name}/`;
-    if (r.name === "my-portfolio") return `https://${GITHUB_USER}.github.io/${r.name}/`;
+    if (r.name === "my-portfolio")
+      return `https://${GITHUB_USER}.github.io/${r.name}/`;
   } catch (e) {}
   return null;
 }
@@ -149,7 +153,8 @@ onMounted(async () => {
   loadTheme();
   applyTheme(theme.value);
   try {
-    if (window.twemoji) window.twemoji.parse(document.body, { folder: "svg", ext: ".svg" });
+    if (window.twemoji)
+      window.twemoji.parse(document.body, { folder: "svg", ext: ".svg" });
   } catch (e) {}
   try {
     const userRes = await fetch(`https://api.github.com/users/${GITHUB_USER}`);
@@ -186,7 +191,8 @@ onMounted(async () => {
   );
   document.querySelectorAll(".section, .hero").forEach((el) => {
     el.classList.add("fade-in");
-    if (el.classList.contains("hero")) el.classList.add("visible"); // Hero visible by default
+    if (el.classList.contains("hero"))
+      el.classList.add("visible"); // Hero visible by default
     else observer.observe(el);
   });
 });
@@ -271,7 +277,10 @@ watch(theme, () => {
               />
             </svg>
           </a>
-          <aside class="nav-actions icon" style="height: 46px; width: 46px; padding: 0px">
+          <aside
+            class="nav-actions icon"
+            style="height: 46px; width: 46px; padding: 0px"
+          >
             <button
               class="theme-toggle"
               style="
@@ -284,7 +293,9 @@ watch(theme, () => {
                 align-items: center;
               "
               @click="toggleTheme"
-              :aria-label="'Switch to ' + (theme === 'dark' ? 'light' : 'dark') + ' theme'"
+              :aria-label="
+                'Switch to ' + (theme === 'dark' ? 'light' : 'dark') + ' theme'
+              "
             >
               <svg
                 v-if="theme !== 'dark'"
@@ -296,7 +307,11 @@ watch(theme, () => {
                 <path d="M21.64 13a9 9 0 01-10.63-10.63A9 9 0 1021.64 13z" />
               </svg>
               <svg v-else width="24" height="24" viewBox="0 0 24 24">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <rect width="24" height="24" />
                   <path
                     fill-rule="evenodd"
@@ -387,15 +402,22 @@ watch(theme, () => {
           <h2>{{ TITLE }}</h2>
           <p class="tagline">{{ TAGLINE }}</p>
           <div class="hero-cta">
-            <button class="btn neutral" @click="openNew(GITHUB_URL)">View GitHub</button>
+            <button class="btn neutral" @click="openNew(GITHUB_URL)">
+              View GitHub
+            </button>
             <button class="btn secondary" @click="openNew(LINKEDIN_URL)">
               Connect on LinkedIn
             </button>
-            <button class="btn neutral" @click="openNew(EMAIL)">Email Me</button>
+            <button class="btn neutral" @click="openNew(EMAIL)">
+              Email Me
+            </button>
           </div>
         </div>
         <div class="hero-avatar">
-          <img :src="user?.avatar_url || BASE + 'vite.svg'" :alt="user?.name || 'Avatar'" />
+          <img
+            :src="user?.avatar_url || BASE + 'vite.svg'"
+            :alt="user?.name || 'Avatar'"
+          />
         </div>
       </div>
     </header>
@@ -406,20 +428,22 @@ watch(theme, () => {
         <div class="container">
           <h3 class="section-title">About</h3>
           <p>
-            Full‑stack engineer specializing in Vue, Node, and TypeScript, with a focus on
-            performance, reliability, and clean architecture.
+            Full‑stack engineer specializing in Vue, Node, and TypeScript, with
+            a focus on performance, reliability, and clean architecture.
           </p>
           <p>
-            Comfortable across Cloud & DevOps (AWS, Docker, Kubernetes, Terraform) and Data Science
-            tooling (Python, Pandas, scikit‑learn) to deliver end‑to‑end solutions.
+            Comfortable across Cloud & DevOps (AWS, Docker, Kubernetes,
+            Terraform) and Data Science tooling (Python, Pandas, scikit‑learn)
+            to deliver end‑to‑end solutions.
           </p>
           <p>
-            I enjoy designing DX‑friendly APIs, building accessible, elegant UIs, and instrumenting
-            apps with metrics and observability for continuous improvement.
+            I enjoy designing DX‑friendly APIs, building accessible, elegant
+            UIs, and instrumenting apps with metrics and observability for
+            continuous improvement.
           </p>
           <p>
-            Curious, pragmatic, and collaborative—I fit well across teams, communicate clearly, and
-            enjoy mentoring and open source.
+            Curious, pragmatic, and collaborative—I fit well across teams,
+            communicate clearly, and enjoy mentoring and open source.
           </p>
         </div>
       </section>
@@ -437,9 +461,14 @@ watch(theme, () => {
               style="cursor: pointer"
             >
               <span v-if="s.logo && !s.failed" class="chip-logo"
-                ><img :src="s.logo" :alt="s.label + ' logo'" @error="s.failed = true"
+                ><img
+                  :src="s.logo"
+                  :alt="s.label + ' logo'"
+                  @error="s.failed = true"
               /></span>
-              <span v-else class="chip-icon" aria-hidden="true">{{ s.icon }}</span>
+              <span v-else class="chip-icon" aria-hidden="true">{{
+                s.icon
+              }}</span>
               <span class="chip-label">{{ s.label }}</span>
             </span>
           </div>
@@ -462,8 +491,14 @@ watch(theme, () => {
               </div>
               <p class="project-desc">{{ r.description || "—" }}</p>
               <div class="project-actions">
-                <button class="btn" @click="openNew(r.html_url)">Open Repo</button>
-                <button v-if="getLiveUrl(r)" class="btn secondary" @click="openNew(getLiveUrl(r))">
+                <button class="btn" @click="openNew(r.html_url)">
+                  Open Repo
+                </button>
+                <button
+                  v-if="getLiveUrl(r)"
+                  class="btn secondary"
+                  @click="openNew(getLiveUrl(r))"
+                >
                   Live
                 </button>
               </div>
@@ -476,11 +511,99 @@ watch(theme, () => {
       <section id="contact" class="section">
         <div class="container contact">
           <h3 class="section-title">Contact</h3>
-          <p>Interested in collaborating or hiring? Reach out via email or connect on LinkedIn.</p>
+          <p>
+            Interested in collaborating or hiring? Reach out via email or
+            connect on LinkedIn.
+          </p>
+
           <div class="contact-actions">
-            <button class="btn neutral" @click="openNew(EMAIL)">Email</button>
-            <button class="btn secondary" @click="openNew(LINKEDIN_URL)">LinkedIn</button>
-            <button class="btn neutral" @click="openNew(GITHUB_URL)">GitHub</button>
+            <button class="btn neutral" @click="openNew(EMAIL)">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                ></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              Email
+            </button>
+
+            <button class="btn secondary" @click="openNew(LINKEDIN_URL)">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.025-3.037-1.852-3.037-1.853 0-2.136 1.447-2.136 2.942v5.664H9.352V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.605 0 4.27 2.371 4.27 5.455v6.286zM5.337 7.433a2.062 2.062 0 11.002-4.124 2.062 2.062 0 01-.002 4.124zM6.99 20.452H3.684V9h3.307v11.452z"
+                ></path>
+              </svg>
+              LinkedIn
+            </button>
+
+            <button class="btn neutral" @click="openNew(GITHUB_URL)">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+                ></path>
+              </svg>
+              GitHub
+            </button>
+
+            <button class="btn neutral" @click="openNew(TWITTER_URL)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.4.36a9.1 9.1 0 0 1-2.88 1.1A4.52 4.52 0 0 0 16.11 0c-2.5 0-4.52 2.03-4.52 4.52 0 .35.04.7.11 1.03A12.84 12.84 0 0 1 3.15 1.67a4.52 4.52 0 0 0 1.4 6.03A4.48 4.48 0 0 1 2.8 7v.06c0 2.18 1.55 4 3.6 4.42a4.52 4.52 0 0 1-2.05.08 4.52 4.52 0 0 0 4.22 3.14A9.05 9.05 0 0 1 1 19.54a12.8 12.8 0 0 0 6.94 2.03c8.33 0 12.89-6.9 12.89-12.89 0-.2 0-.39-.01-.58A9.22 9.22 0 0 0 23 3z"
+                />
+              </svg>
+              Twitter
+            </button>
+
+            <button class="btn neutral" @click="openNew(INSTAGRAM_URL)">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path
+                  d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                ></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              Instagram
+            </button>
           </div>
         </div>
       </section>
@@ -543,8 +666,8 @@ body,
 }
 body {
   margin: 0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
-    "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   color: var(--text);
   background: var(--bg);
 }
@@ -574,7 +697,11 @@ a:focus {
   content: "";
   position: absolute;
   inset: -10%;
-  background: radial-gradient(1200px 800px at 80% -10%, var(--bg-3d-a), transparent 60%),
+  background: radial-gradient(
+      1200px 800px at 80% -10%,
+      var(--bg-3d-a),
+      transparent 60%
+    ),
     radial-gradient(900px 700px at -10% 10%, var(--bg-3d-b), transparent 60%);
   filter: saturate(1.1);
 }
@@ -584,12 +711,22 @@ a:focus {
   right: -10%;
   bottom: -40%;
   height: 70%;
-  background-image: linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+  background-image: linear-gradient(
+      to right,
+      rgba(148, 163, 184, 0.08) 1px,
+      transparent 1px
+    ),
     linear-gradient(to top, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
   background-size: 40px 40px;
   transform: perspective(900px) rotateX(58deg);
   transform-origin: center top;
-  mask-image: linear-gradient(to top, transparent 0%, black 40%, black 70%, transparent 100%);
+  mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    black 40%,
+    black 70%,
+    transparent 100%
+  );
 }
 .orb {
   position: absolute;
@@ -603,7 +740,11 @@ a:focus {
 .orb-a {
   top: 10%;
   left: -5%;
-  background: radial-gradient(circle at 30% 30%, var(--brand-2), transparent 60%);
+  background: radial-gradient(
+    circle at 30% 30%,
+    var(--brand-2),
+    transparent 60%
+  );
 }
 .orb-b {
   top: 20%;
@@ -779,7 +920,8 @@ a:focus {
   font-weight: 700;
   letter-spacing: 0.2px;
   background: linear-gradient(180deg, var(--brand), #0284c7);
-  box-shadow: 0 10px 20px rgba(14, 165, 233, 0.25), inset 0 0 0 1px rgba(148, 163, 184, 0.2);
+  box-shadow: 0 10px 20px rgba(14, 165, 233, 0.25),
+    inset 0 0 0 1px rgba(148, 163, 184, 0.2);
   transition: transform 0.12s ease, filter 0.2s ease, box-shadow 0.2s ease;
 }
 .btn:hover {
@@ -834,7 +976,11 @@ a:focus {
   padding: 10px 12px;
   border-radius: 14px;
   border: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(148, 163, 184, 0.15), rgba(148, 163, 184, 0.08));
+  background: linear-gradient(
+    180deg,
+    rgba(148, 163, 184, 0.15),
+    rgba(148, 163, 184, 0.08)
+  );
   box-shadow: var(--shadow-sm);
   transform: perspective(900px);
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
@@ -878,7 +1024,11 @@ a:focus {
   gap: 18px;
 }
 .project {
-  background: linear-gradient(180deg, rgba(148, 163, 184, 0.1), rgba(148, 163, 184, 0.06));
+  background: linear-gradient(
+    180deg,
+    rgba(148, 163, 184, 0.1),
+    rgba(148, 163, 184, 0.06)
+  );
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 16px;
@@ -938,9 +1088,15 @@ a:focus {
   justify-content: center;
 }
 .contact-actions .btn {
-  flex: 1 1 220px;
-  min-width: 160px;
-  padding: 8px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  gap: 4px;
+}
+
+.contact-actions .btn svg {
+  margin-right: 6px;
 }
 
 /* FOOTER */

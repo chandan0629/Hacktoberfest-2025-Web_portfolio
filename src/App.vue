@@ -13,7 +13,7 @@ const GITHUB_USER = "chandan0629";
 const GITHUB_URL = `https://github.com/${GITHUB_USER}`;
 const LINKEDIN_URL = "https://www.linkedin.com/in/chandan-kumar-raj-210839210/";
 // Please update with ur profile links
-const TWITTER_URL = "https://twitter.com/your_twitter_handle";
+const TWITTER_URL = "https://x.com/chandankum13363?s=21";
 const INSTAGRAM_URL = "https://instagram.com/your_instagram_username";
 
 // Theme
@@ -241,7 +241,7 @@ watch(theme, () => {
         <div
           style="
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             padding-left: 22px;
             gap: 22px;
           "
@@ -277,6 +277,27 @@ watch(theme, () => {
               />
             </svg>
           </a>
+          <a
+            :href="TWITTER_URL"
+            target="_blank"
+            rel="noopener"
+            class="icon flex items-center justify-center w-8 h-8"
+            aria-label="Twitter"
+            @click="closeNav"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              :class="{ 'fill-black': !isDarkMode, 'fill-white': isDarkMode }"
+              class="w-6 h-6 transition-colors duration-300"
+            >
+              <path
+                fill="currentColor"
+                d="M18.244 2H21l-6.43 7.36L22 22h-4.766l-5.01-6.41L6.57 22H3l6.86-7.86L2 2h4.766l4.774 6.186L18.244 2zm-2.27 17h1.22L8.16 5h-1.3l9.115 14z"
+              />
+            </svg>
+          </a>
+
           <aside
             class="nav-actions icon"
             style="height: 46px; width: 46px; padding: 0px"
@@ -407,6 +428,9 @@ watch(theme, () => {
             </button>
             <button class="btn secondary" @click="openNew(LINKEDIN_URL)">
               Connect on LinkedIn
+            </button>
+            <button class="btn secondary" @click="openNew(TWITTER_URL)">
+              Connect on Twitter
             </button>
             <button class="btn neutral" @click="openNew(EMAIL)">
               Email Me

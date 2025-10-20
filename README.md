@@ -20,7 +20,7 @@ Responsive, modern developer portfolio built with Vue 3 + Vite. It features offi
   - Responsive buttons (Email, LinkedIn, GitHub)
 - Subtle 3D visuals (tilt effects on cards/chips, decorative background)
 
-## Quick Start
+## Quick Start-
 
 ```bash
 # Install dependencies

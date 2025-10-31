@@ -14,7 +14,7 @@ const GITHUB_URL = `https://github.com/${GITHUB_USER}`;
 const LINKEDIN_URL = "https://www.linkedin.com/in/chandan-kumar-raj-210839210/";
 // Please update with ur profile links
 const TWITTER_URL = "https://x.com/chandankum13363?s=21";
-const INSTAGRAM_URL = "https://instagram.com/your_instagram_username";
+const INSTAGRAM_URL = "https://instagram.com/chandan_629";
 
 // Theme
 const THEME_KEY = "portfolio_theme_v1";
